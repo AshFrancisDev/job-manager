@@ -23,7 +23,7 @@ if ( have_posts() ) {
 			do_action( 'presscore_before_loop' );
 			?>
 
-			<div id="content" class="content job-content" role="main">
+			<div id="content" class="job-content content" role="main">
 
 				<?php if ( post_password_required() ) { ?>
 
@@ -41,8 +41,6 @@ if ( have_posts() ) {
 				} else {
 					get_template_part( 'content-single', str_replace( 'dt_', '', get_post_type() ) );
 				}
-
-				comments_template( '', true );
 				?>
 
 			</div><!-- #content -->

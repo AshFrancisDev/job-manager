@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             1.0.0
+ * @since             1.0.2
  * @package           Plugin_Name
  *
  * @wordpress-plugin
@@ -369,41 +369,29 @@ if( function_exists('acf_add_local_field_group') ):
 
 // ----
 
-add_filter( 'single_template', 'load_my_custom_template', 50, 1 );
-function load_my_custom_template( $template ) {
+/* ========== START REGISTER CUSTOM POST TYPE TEMPLATE ========== */
+if( !function_exists('get_ju_job_template') ):
+ function get_ju_job_template($single_template) {
+    global $wp_query, $post;
+    if ($post->post_type == 'ju_job'){
+        $single_template = plugin_dir_path(__FILE__) . '/templates/ju_job_template.php';
+    }//end if ju_job
+    return $single_template;
+}//end get_ju_job_template function
+endif;
+ 
+add_filter( 'single_template', 'get_ju_job_template' ) ;
+/* ========== END REGISTER CUSTOM POST TYPE TEMPLATE ========== */
 
-	if ( is_singular( 'my_custom_post_type' ) ) {
-		$template = plugins_url( 'templates/single-job.php', __FILE__ );
-	}
-	
-	return $template;
-}
 
-// Define path and URL to the ACF plugin.
-define( 'MY_ACF_PATH', plugin_dir_path( __FILE__ ) . '/includes/acf/' );
-define( 'MY_ACF_URL', plugin_dir_path( __FILE__ ) . '/includes/acf/' );
 
-// Include the ACF plugin.
-include_once( MY_ACF_PATH . 'acf.php' );
-
-// Customize the url setting to fix incorrect asset URLs.
-add_filter('acf/settings/url', 'my_acf_settings_url');
-function my_acf_settings_url( $url ) {
-    return MY_ACF_URL;
-}
-
-// (Optional) Hide the ACF admin menu item.
-// add_filter('acf/settings/show_admin', 'my_acf_settings_show_admin');
-// function my_acf_settings_show_admin( $show_admin ) {
-//     return false;
-// }
 
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+define( 'PLUGIN_NAME_VERSION', '1.0.2' );
 
 /**
  * The code that runs during plugin activation.
