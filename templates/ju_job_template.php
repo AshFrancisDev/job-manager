@@ -25,31 +25,58 @@ if ( have_posts() ) {
 
 			<div id="content" class="job-content content" role="main">
 
-				<?php if ( post_password_required() ) { ?>
+				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<?php the_content(); ?>
 
-						<?php
-						do_action( 'presscore_before_post_content' );
-						the_content();
-						do_action( 'presscore_after_post_content' );
-						?>
+				</article>
 
-					</article>
-
-					<?php
-				} else {
-					get_template_part( 'content-single', str_replace( 'dt_', '', get_post_type() ) );
-				}
-				?>
+				
 
 			</div><!-- #content -->
 
+			<aside id="sidebar" class="sidebar sticky-sidebar">
+				<div class="sidebar-content" style="position: relative;">
+					<p>Job Reference: <?php the_field( 'job_reference' ); ?></p>
+					<p>Salary: <?php the_field( 'salary' ); ?></p>
+					<p><?php the_terms( get_the_id(), 'ju_job_industry', __( "Job Industries: " ), "," ); ?></p>
+					<p><?php the_terms( get_the_id(), 'ju_job_locations', __( "Job Locations: " ), "," ); ?></p>
+					<p><?php the_terms( get_the_id(), 'ju_job_types', __( "Job Types: " ), "," ); ?></p>
+					<p><?php the_terms( get_the_id(), 'ju_job_status', __( "Job Status: " ), "," ); ?></p>
+					<?php
+
+						/*******************************
+						* this will work in the loop
+						*******************************/
+						/* check if the posts publish date is older than 60 days */
+						if( strtotime( $post->post_date ) < strtotime('-5 minutes') ) {
+						
+							/* post is older than 60 days - do something with it!! */
+							echo('older than 5');
+							
+						} elseif ( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
+						
+							/* post is older than 60 days - do something with it!! */
+							echo('older than 10 min');
+							
+						}
+
+					?>
+				</div>
+			</aside>
+
 			<?php
-			do_action( 'presscore_after_content' );
+			// do_action( 'presscore_after_content' );
 		}
 	}
 }
 
 get_footer();
 ?>
+
+
+<script>
+	jQuery(function($){
+		$('.ju_job-template-default .sidebar-content section').remove();
+	});
+</script>
