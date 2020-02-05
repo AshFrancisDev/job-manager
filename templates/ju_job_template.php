@@ -45,19 +45,29 @@ if ( have_posts() ) {
 					<p><?php the_terms( get_the_id(), 'ju_job_status', __( "Job Status: " ), "," ); ?></p>
 					<?php
 
-						/*******************************
-						* this will work in the loop
-						*******************************/
-						/* check if the posts publish date is older than 60 days */
+						
 						if( strtotime( $post->post_date ) < strtotime('-5 minutes') ) {
 						
 							/* post is older than 60 days - do something with it!! */
 							echo('older than 5');
 							
-						} elseif ( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
+						}
+						if( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
 						
 							/* post is older than 60 days - do something with it!! */
 							echo('older than 10 min');
+							
+						}
+						if( strtotime( $post->post_date ) < strtotime('-1 days') ) {
+						
+							/* post is older than 10 days - do something with it!! */
+							echo('older than 1 days');
+							
+						}
+						if( strtotime( $post->post_date ) < strtotime('-10 days') ) {
+						
+							/* post is older than 10 days - do something with it!! */
+							echo('older than 10 days');
 							
 						}
 

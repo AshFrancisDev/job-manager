@@ -381,6 +381,7 @@ if( !function_exists('get_ju_job_template') ):
 endif;
  
 add_filter( 'single_template', 'get_ju_job_template' ) ;
+
 /* ========== END REGISTER CUSTOM POST TYPE TEMPLATE ========== */
 
 
