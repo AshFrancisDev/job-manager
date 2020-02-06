@@ -382,6 +382,17 @@ endif;
  
 add_filter( 'single_template', 'get_ju_job_template' ) ;
 
+function get_ju_job_archive_template($archive_template) {
+	global $post;
+
+	if ($post->post_type == 'ju_job') {
+		$archive_template = dirname( __FILE__ ) . '/templates/archive-ju_job.php';
+	}
+	return $archive_template;
+}
+
+add_filter( "archive_template", "get_ju_job_archive_template" );
+
 /* ========== END REGISTER CUSTOM POST TYPE TEMPLATE ========== */
 
 
