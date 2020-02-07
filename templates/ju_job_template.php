@@ -46,32 +46,33 @@ if ( have_posts() ) {
 					<?php
 
 						
-						if( strtotime( $post->post_date ) < strtotime('-5 minutes') ) {
+						// if( strtotime( $post->post_date ) < strtotime('-5 minutes') ) {
 						
-							/* post is older than 60 days - do something with it!! */
-							echo('older than 5');
+						// 	/* post is older than 60 days - do something with it!! */
+						// 	echo('older than 5');
 							
-						}
-						if( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
+						// }
+						// if( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
 						
-							/* post is older than 60 days - do something with it!! */
-							echo('older than 10 min');
+						// 	/* post is older than 60 days - do something with it!! */
+						// 	echo('older than 10 min');
 							
-						}
-						if( strtotime( $post->post_date ) < strtotime('-1 days') ) {
+						// }
+						// if( strtotime( $post->post_date ) < strtotime('-1 days') ) {
 						
-							/* post is older than 10 days - do something with it!! */
-							echo('older than 1 days');
+						// 	/* post is older than 10 days - do something with it!! */
+						// 	echo('older than 1 days');
 							
-						}
-						if( strtotime( $post->post_date ) < strtotime('-10 days') ) {
+						// }
+						// if( strtotime( $post->post_date ) < strtotime('-10 days') ) {
 						
-							/* post is older than 10 days - do something with it!! */
-							echo('older than 10 days');
+						// 	/* post is older than 10 days - do something with it!! */
+						// 	echo('older than 10 days');
 							
-						}
+						// }
 
 					?>
+					<p><a href="/apply-online/?jobref=<?php the_field( 'job_reference' ); ?>" class="button dt-btn"></a></p>
 				</div>
 			</aside>
 
