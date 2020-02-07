@@ -155,7 +155,7 @@ get_header();
 
                         
                         <div class="blog-content wf-td">
-                            <h3 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" rel="bookmark"><?php the_title(); ?>!</a></h3>
+                            <h3 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" rel="bookmark"><?php the_title(); ?></a></h3>
 
                             <div class="entry-meta"><time class="entry-date updated" datetime="2020-02-04T12:26:38+00:00"><?php echo get_the_date(); ?></time></div>
                             <p><?php the_terms( get_the_id(), 'ju_job_status', __( "Job Status: " ), "," ); ?></p>
