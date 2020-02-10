@@ -72,6 +72,7 @@ if ( have_posts() ) {
 						}
 
 					?>
+					<a class="button dt-btn" href="/apply-online/?jobref=<?php the_field( 'job_reference' ); ?>">APPLY NOW</a>
 				</div>
 			</aside>
 
