@@ -43,35 +43,37 @@ if ( have_posts() ) {
 					<p><?php the_terms( get_the_id(), 'ju_job_locations', __( "Job Locations: " ), "," ); ?></p>
 					<p><?php the_terms( get_the_id(), 'ju_job_types', __( "Job Types: " ), "," ); ?></p>
 					<p><?php the_terms( get_the_id(), 'ju_job_status', __( "Job Status: " ), "," ); ?></p>
-					<?php
+					<p>Job Status: <span class="ju_status"><?php
+						if( has_term('', 'ju_job_status') ){
+							// do something
+							the_terms( get_the_id(), 'ju_job_status', __( "" ), "," );
+						}
+						else if( strtotime( $post->post_date ) < strtotime('-28 days') ) {
+						
+							/* post is older than 5 weeks - do something with it!! */
+							echo('Filled');
+							
+						}
+						else if( strtotime( $post->post_date ) < strtotime('-21 days') ) {
+						
+							/* post is older than 60 days - do something with it!! */
+							echo('Offer Stage');
+							
+						}
+						else if( strtotime( $post->post_date ) < strtotime('-14 days') ) {
+						
+							/* post is older than 10 days - do something with it!! */
+							echo('Interview Stage');
+							
+						}
+						else if( strtotime( $post->post_date ) < strtotime('-1 seconds') ) {
+						
+							/* post is older than 10 days - do something with it!! */
+							echo('New Role');
+							
+						}
 
-						
-						// if( strtotime( $post->post_date ) < strtotime('-5 minutes') ) {
-						
-						// 	/* post is older than 60 days - do something with it!! */
-						// 	echo('older than 5');
-							
-						// }
-						// if( strtotime( $post->post_date ) < strtotime('-10 minutes') ) {
-						
-						// 	/* post is older than 60 days - do something with it!! */
-						// 	echo('older than 10 min');
-							
-						// }
-						// if( strtotime( $post->post_date ) < strtotime('-1 days') ) {
-						
-						// 	/* post is older than 10 days - do something with it!! */
-						// 	echo('older than 1 days');
-							
-						// }
-						// if( strtotime( $post->post_date ) < strtotime('-10 days') ) {
-						
-						// 	/* post is older than 10 days - do something with it!! */
-						// 	echo('older than 10 days');
-							
-						// }
-
-					?>
+					?></span></p>
 					<a class="button dt-btn" href="/apply-online/?jobref=<?php the_field( 'job_reference' ); ?>">APPLY NOW</a>
 				</div>
 			</aside>
@@ -89,5 +91,10 @@ get_footer();
 <script>
 	jQuery(function($){
 		$('.ju_job-template-default .sidebar-content section').remove();
+		$('span.ju_status').filter(function() { return ($(this).text() === 'New Role') }).css('color', 'green');
+		$('span.ju_status').filter(function() { return ($(this).text() === 'CV Selection') }).css('color', 'yellow');
+		$('span.ju_status').filter(function() { return ($(this).text() === 'Interview Stage') }).css('color', 'orange');
+		$('span.ju_status').filter(function() { return ($(this).text() === 'Offer Stage') }).css('color', 'red');
+		$('span.ju_status').filter(function() { return ($(this).text() === 'Filled') }).css('color', 'darkred');
 	});
 </script>
