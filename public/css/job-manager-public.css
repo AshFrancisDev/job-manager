@@ -2,3 +2,19 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .job-read-more {
+    position: unset !important;
+    right: unset !important;
+    bottom: unset !important;
+}
+
+.wf-cell article {
+    max-height: 500px;
+    height: 500px;
+}
+.post-type-archive-ju_job .beautiful-taxonomy-filters-label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
