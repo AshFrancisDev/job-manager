@@ -34,12 +34,12 @@ if ( ! defined( 'WPINC' ) ) {
 function ju_job() {
 
 	$labels = array(
-		'name'                  => _x( 'Jobs', 'Post Type General Name', 'text_domain' ),
-		'singular_name'         => _x( 'Job', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'             => __( 'Jobs', 'text_domain' ),
-		'name_admin_bar'        => __( 'Job', 'text_domain' ),
-		'archives'              => __( 'Job Archives', 'text_domain' ),
-		'attributes'            => __( 'Job Attributes', 'text_domain' ),
+		'name'                  => _x( 'JUJobs', 'Post Type General Name', 'text_domain' ),
+		'singular_name'         => _x( 'JUJob', 'Post Type Singular Name', 'text_domain' ),
+		'menu_name'             => __( 'JUJobs', 'text_domain' ),
+		'name_admin_bar'        => __( 'JUJob', 'text_domain' ),
+		'archives'              => __( 'JUJob Archives', 'text_domain' ),
+		'attributes'            => __( 'JUJob Attributes', 'text_domain' ),
 		'parent_item_colon'     => __( 'Parent Job:', 'text_domain' ),
 		'all_items'             => __( 'All Jobs', 'text_domain' ),
 		'add_new_item'          => __( 'Add New Job', 'text_domain' ),
@@ -67,7 +67,7 @@ function ju_job() {
 		'description'           => __( 'Jobs', 'text_domain' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'page-attributes', 'post-formats' ),
-		'taxonomies'            => array( 'category', 'post_tag' ),
+		'taxonomies'            => array(),
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
@@ -395,7 +395,12 @@ add_filter( "archive_template", "get_ju_job_archive_template" );
 
 /* ========== END REGISTER CUSTOM POST TYPE TEMPLATE ========== */
 
-
+add_filter( 'excerpt_length', 'change_excerpt_length' );
+function change_excerpt_length( $length ) {
+if( 'ju_job' == get_post_type() ) {
+	return 20; 
+}
+}
 
 
 /**
