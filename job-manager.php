@@ -62,6 +62,12 @@ function ju_job() {
 		'items_list_navigation' => __( 'Jobs list navigation', 'text_domain' ),
 		'filter_items_list'     => __( 'Filter Jobs list', 'text_domain' ),
 	);
+	$rewrite = array (
+		'slug'					=> 'jobs',
+        'with_front'			=> true,
+        'pages'					=> true,
+        'feeds'					=> true,
+	);
 	$args = array(
 		'label'                 => __( 'Job', 'text_domain' ),
 		'description'           => __( 'Jobs', 'text_domain' ),
@@ -81,6 +87,7 @@ function ju_job() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
+        'rewrite'       		=> $rewrite,
 	);
 	register_post_type( 'ju_job', $args );
 
@@ -401,6 +408,7 @@ if( 'ju_job' == get_post_type() ) {
 	return 20; 
 }
 }
+
 
 
 /**

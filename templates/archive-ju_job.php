@@ -26,7 +26,7 @@ get_header();
 				<form class="searchform" role="search" method="get" action="https://www.johnsonunderwood.co.uk/">
 					<label for="the7-search" class="screen-reader-text">Search:</label>
 					<input type="text" id="the7-search" class="field searchform-s" name="s" value="" placeholder="Type and hit enter …">
-					<input type="hidden" name="post_type" value="wpbb_job">
+					<!-- <input type="hidden" name="post_type" value="wpbb_job"> -->
 					<input type="submit" class="assistive-text searchsubmit" value="Go!">
 					<a href="#go" class="submit"></a>
 				</form>
@@ -63,18 +63,12 @@ get_header();
                     <label for="select-job_industries" class="beautiful-taxonomy-filters-label">Job Industries</label>
 					<select data-taxonomy="job_industries" name="select-job_industries" id="select-job_industries" class="beautiful-taxonomy-filters-select job-filter select2-hidden-accessible">
 					<option value=" " selected="selected">All Job Industries</option>
-					<option class="level-0 featured" value="Accountancy & Finance">Accountancy & Finance</option>
-					<option class="level-0 featured" value="Ancillary, Facilities, Driving & Catering">Ancillary, Facilities, Driving & Catering</option>
-					<option class="level-0 featured" value="Care & Social Work">Care & Social Work</option>
-					<option class="level-0 featured" value="Commercial, Office & HR">Commercial, Office & HR</option>
-					<option class="level-0 featured" value="Industrial">Industrial</option>
-					<option class="level-0 featured" value="Information Technology">Information Technology</option>
-					<option class="level-0 featured" value="Legal & Executive">Legal & Executive</option>
-					<option class="level-0 featured" value="Public Sector">Public Sector</option>
-					<option class="level-0 featured" value="Sales, Marketing & Events">Sales, Marketing & Events</option>
-					<option class="level-0 featured" value="Specialist, Housing & NHS">Specialist, Housing & NHS</option>
-					<option class="level-0 featured" value="Specialist, Housing, Education & NHS">Specialist, Housing, Education & NHS</option>
-					<option class="level-0 featured" value="Specialist; Project Management">Specialist; Project Management</option>
+                    <?php $terms = get_terms( 'ju_job_industry' );
+                    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
+                        foreach ( $terms as $term ) {
+                            echo '<option class="level-0 featured" value="' . $term->name . '">' . $term->name . '</option>';
+                        }
+                    } ?>
                     </select>
                     <br>
 
@@ -100,7 +94,7 @@ get_header();
 	<div id="content" class="ju_job ju_job_archive job-content content" role="main">
 	<h2>Jobs</h2>
 
-    <div class="wf-container loading-effect-fade-in iso-container bg-under-post description-under-image content-align-left dt-isotope cont-id-0 iso-item-ready" data-padding="10px" data-cur-page="1" data-width="320px" data-columns="2" data-cont-id="0" style="position: relative; height: 383px;">
+    <div class="wf-container loading-effect-fade-in iso-container bg-under-post description-under-image content-align-left dt-isotope cont-id-0 iso-item-ready" data-padding="10px" data-cur-page="1" data-width="320px" data-columns="2" data-cont-id="0" style="position: relative;">
 
     <?php 
     // WP_Query arguments
@@ -248,13 +242,15 @@ get_header();
 		$jobloc = $('#select-job_locations').val();
 		$jobind = $('#select-job_industries').val();
 		$jobstat = $('#select-job_status').val();
+		$jobcont = $('#the7-search').val();
 		$('select.job-filter').change(function(){
 			$('.wf-cell').hide();
 			$jobtype = $('#select-job_types').val();
 			$jobloc = $('#select-job_locations').val();
 			$jobind = $('#select-job_industries').val();
 			$jobstat = $('#select-job_status').val();
-			$('.wf-cell[data-job-type*="'+ $jobtype +'"][data-locations*="'+ $jobloc +'"][data-job-industry*="'+ $jobind +'"][data-job-status*="'+ $jobstat +'"]').show();
+            $jobcont = $('#the7-search').val();
+			$('.wf-cell:contains('+ $jobcont +')[data-job-type*="'+ $jobtype +'"][data-locations*="'+ $jobloc +'"][data-job-industry*="'+ $jobind +'"][data-job-status*="'+ $jobstat +'"]').show();
         });
         
         $('span.ju_status').filter(function() { return ($(this).text() === 'New Role') }).css('color', 'green');
@@ -262,6 +258,45 @@ get_header();
 		$('span.ju_status').filter(function() { return ($(this).text() === 'Interview Stage') }).css('color', 'orange');
 		$('span.ju_status').filter(function() { return ($(this).text() === 'Offer Stage') }).css('color', 'red');
 		$('span.ju_status').filter(function() { return ($(this).text() === 'Filled') }).css('color', 'darkred');
+
+        // Construct URL object using current browser URL
+        var url = new URL(document.location);
+
+        // Get query parameters object
+        var params = url.searchParams;
+
+        // Get value of delivery results
+        var loc = params.get("loc");
+        var typ = params.get("typ");
+        var ind = params.get("ind");
+        var sta = params.get("sta");
+
+        // Set it as the dropdown value
+        if(loc) {
+            $("#select-job_locations").val(loc);
+            $('.wf-cell').hide();
+            $jobloc = $('#select-job_locations').val();
+            $('.wf-cell[data-locations*="'+ $jobloc +'"]').show();
+        }
+        if(typ) {
+            $("#select-job_types").val(typ);
+            $('.wf-cell').hide();
+            $jobtype = $('#select-job_types').val();
+            $('.wf-cell[data-job-type*="'+ $jobtype +'"]').show();
+        }
+        if(ind) {
+            $("#select-job_industries").val(ind);
+            $('.wf-cell').hide();
+            $jobind = $('#select-job_industries').val();
+            $('.wf-cell[data-job-industry*="'+ $jobind +'"]').show();
+        }
+        if(sta) {
+            $("#select-job_status").val(sta);
+            $('.wf-cell').hide();
+            $jobstat = $('#select-job_status').val();
+            $('.wf-cell[data-job-status*="'+ $jobstat +'"]').show();
+        }
+        
     });
     
 </script>
